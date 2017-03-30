@@ -10,3 +10,15 @@ dependencies {
 liferay {
 	deployDir = new File("/Users/ivan/Liferay/bundles/deploy")
 }
+
+// Temporarily disable metal-cli tasks
+tasks.transpileJS.enabled = false
+tasks.configJSModules.enabled = false
+
+// Insert a custom gulp task in the build
+task gulp(type: Exec, dependsOn: replaceSoyTranslation) {
+	commandLine = ['./node_modules/.bin/gulp']
+	/*System.err.println("HOla!");*/
+}
+jar.dependsOn(gulp)
+
