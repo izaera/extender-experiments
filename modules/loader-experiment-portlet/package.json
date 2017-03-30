@@ -1,0 +1,13 @@
+{
+    "devDependencies": {
+      "metal-cli": "^2.1.2"
+    },
+    "dependencies": {
+        "isarray": "^2.0.1",
+        "isobject": "^2.1.0"
+    },
+    "description": "Loader Experiment Portlet",
+    "name": "loader-experiment-portlet",
+    "private": true,
+    "version": "1.0.0"
+}

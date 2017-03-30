@@ -1,0 +1,5 @@
+Bundle-Name: loader-experiment-portlet
+Bundle-SymbolicName: loader-experiment-portlet
+Bundle-Version: 1.0.0
+Web-ContextPath: /loader-experiment-portlet
+-includeresource: package.json
