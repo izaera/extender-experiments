@@ -71,7 +71,8 @@ gulp.task('package-npm', function() {
 		function(pkgs) {
 			Object.values(pkgs).forEach(function(pkg) {
 				var srcFiles = pkg.dir + '/**/*';
-				var outputDir = './build/resources/main/META-INF/resources/node_modules/' + pkg.id;
+				// Versioned flat style deps -> var outputDir = './build/resources/main/META-INF/resources/node_modules/' + pkg.id;
+				var outputDir = './build/resources/main/META-INF/resources/' + path.relative('.', pkg.dir);
 				
 				if (srcFiles === './**/*') {
 					return;
