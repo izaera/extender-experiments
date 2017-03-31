@@ -66,12 +66,12 @@ function getDependencyDir(packageDir, dependency) {
 	return dependencyDir;
 }
 
-gulp.task('default', function() {
+gulp.task('package-npm', function() {
 	getPackageDependencies('.').then(
 		function(pkgs) {
 			Object.values(pkgs).forEach(function(pkg) {
 				var srcFiles = pkg.dir + '/**/*';
-				var outputDir = 'build/resources/main/META-INF/resources/node_modules/' + pkg.id;
+				var outputDir = './build/resources/main/META-INF/resources/node_modules/' + pkg.id;
 				
 				if (srcFiles === './**/*') {
 					return;
@@ -89,3 +89,9 @@ gulp.task('default', function() {
 	);
 });
 
+gulp.task('copy-package-json', function() {
+	gulp.src('./package.json')
+		.pipe(gulp.dest('build/resources/main/META-INF/resources'))
+});
+
+gulp.task('default', ['package-npm', 'copy-package-json']);
