@@ -5,13 +5,11 @@ var Promise = require('bluebird');
 var gulp = require('gulp');
 var gulpIgnore = require('gulp-ignore');
 
+// Handling of node_modules packaging
 var readPackageJson = require('read-package-json');
 var resolveModule = require('resolve');
 var path = require('path');
 
-/*
- * returns an array of packages 
- */
 function getPackageDependencies(basedir) {
 	return new Promise(function(resolve, reject) {
 		readPackageJson(basedir + '/package.json', false, function (err, data) {
@@ -93,4 +91,35 @@ gulp.task('copy-package-json', function() {
 		.pipe(gulp.dest('build/resources/main/META-INF/resources'))
 });
 
-gulp.task('default', ['package-npm', 'copy-package-json']);
+// Handling of ES2015 transpilation
+const babel = require('gulp-babel');
+var babelPluginModules = require('babel-plugin-transform-es2015-modules-commonjs');
+// this the plugin that metal-cli uses -> var babelPluginModules = require('babel-plugin-transform-es2015-modules-amd');
+
+gulp.task('transpile', function() {
+	var srcFiles = 'src/main/resources/META-INF/resources/**/*.es.js';
+	var outputDir = 'build/resources/main/META-INF/resources';
+	
+	// https://github.com/metal/metal-tools-build-amd/blob/master/lib/pipelines/buildAmd.js#L26
+	var options = {
+		compact: false,
+    plugins: [babelPluginModules],
+    presets: ['es2015'],
+    // sourceMaps: options.sourceMaps
+	};
+
+	return gulp.src(srcFiles)
+	        .pipe(babel(options))
+	        .pipe(gulp.dest(outputDir));
+					
+					
+	// var result = babel.transformFileSync(
+	// 	'src/main/resources/META-INF/resources/lib/index.es.js', 
+	// 	options
+	// );
+	// 
+	// console.log(result.code);
+});
+
+// Define build's default target
+gulp.task('default', ['package-npm', 'copy-package-json', 'transpile']);
