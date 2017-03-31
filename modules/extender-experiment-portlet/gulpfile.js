@@ -81,8 +81,6 @@ gulp.task('package-npm', function() {
 					.pipe(gulpIgnore.exclude('node_modules'))
 					.pipe(gulpIgnore.exclude('node_modules/**/*'))
 					.pipe(gulp.dest(outputDir));
-				
-				console.log(srcFiles)
 			});
 		}, 
 		function(err) {console.log(err)}
