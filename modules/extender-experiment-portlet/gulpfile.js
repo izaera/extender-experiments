@@ -67,6 +67,7 @@ function getDependencyDir(packageDir, dependency) {
 gulp.task('package-npm', function() {
 	getPackageDependencies('.').then(
 		function(pkgs) {
+			// TODO: Object.values not supported in older nodes
 			Object.values(pkgs).forEach(function(pkg) {
 				var srcFiles = pkg.dir + '/**/*';
 				// Versioned flat style deps -> var outputDir = './build/resources/main/META-INF/resources/node_modules/' + pkg.id;
