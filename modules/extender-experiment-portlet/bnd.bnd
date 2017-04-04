@@ -1,5 +1,4 @@
 Bundle-Name: extender-experiment-portlet
 Bundle-SymbolicName: com.liferay.extender.experiment
 Bundle-Version: 1.0.0
-Liferay-Package-Config: /META-INF/resources/package.json
 Web-ContextPath: /extender-experiment-portlet

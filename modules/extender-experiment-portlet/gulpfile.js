@@ -1,14 +1,47 @@
 'use strict';
 
-var Promise = require('bluebird');
-
 var gulp = require('gulp');
-var gulpIgnore = require('gulp-ignore');
 
+// Define build's default target
+gulp.task('default', ['package-npm', 'copy-package-json', 'transpile']);
+
+
+////////////////////////////////////////////////////////////////////////////////
+// Handling of ES2015 transpilation
+////////////////////////////////////////////////////////////////////////////////
+const babel = require('gulp-babel');
+var sourcemaps = require('gulp-sourcemaps');
+var babelPluginModules = require('babel-plugin-transform-es2015-modules-commonjs');
+// this the plugin that metal-cli uses -> var babelPluginModules = require('babel-plugin-transform-es2015-modules-amd');
+
+gulp.task('transpile', function() {
+	var srcFiles = 'src/main/resources/META-INF/resources/**/*.es.js';
+	var outputDir = 'build/resources/main/META-INF/resources';
+	
+	// https://github.com/metal/metal-tools-build-amd/blob/master/lib/pipelines/buildAmd.js#L26
+	var options = {
+		compact: false,
+    plugins: [babelPluginModules],
+    presets: ['es2015', 'react'],
+    // sourceMaps: options.sourceMaps
+	};
+
+	return gulp.src(srcFiles)
+					.pipe(sourcemaps.init())
+	        .pipe(babel(options))
+					.pipe(sourcemaps.write('.'))
+	        .pipe(gulp.dest(outputDir));
+});
+
+
+////////////////////////////////////////////////////////////////////////////////
 // Handling of node_modules packaging
+////////////////////////////////////////////////////////////////////////////////
 var readPackageJson = require('read-package-json');
 var resolveModule = require('resolve');
 var path = require('path');
+var gulpIgnore = require('gulp-ignore');
+var Promise = require('bluebird');
 
 function getPackageDependencies(basedir) {
 	return new Promise(function(resolve, reject) {
@@ -65,22 +98,30 @@ function getDependencyDir(packageDir, dependency) {
 }
 
 gulp.task('package-npm', function() {
+	var flatDependencies = true;
+	
 	getPackageDependencies('.').then(
 		function(pkgs) {
 			// TODO: Object.values not supported in older nodes
 			Object.values(pkgs).forEach(function(pkg) {
 				var srcFiles = pkg.dir + '/**/*';
-				// Versioned flat style deps -> var outputDir = './build/resources/main/META-INF/resources/node_modules/' + pkg.id;
-				var outputDir = './build/resources/main/META-INF/resources/' + path.relative('.', pkg.dir);
+				var outputDir = 
+					flatDependencies 
+					? './build/resources/main/META-INF/resources/node_modules/' + pkg.id
+					: './build/resources/main/META-INF/resources/' + path.relative('.', pkg.dir)
 				
 				if (srcFiles === './**/*') {
 					return;
 				}
 				
-				gulp.src(srcFiles)
-					.pipe(gulpIgnore.exclude('node_modules'))
-					.pipe(gulpIgnore.exclude('node_modules/**/*'))
-					.pipe(gulp.dest(outputDir));
+				var gs = gulp.src(srcFiles);
+				
+				if (flatDependencies) {
+					gs = gs.pipe(gulpIgnore.exclude('node_modules'))
+									.pipe(gulpIgnore.exclude('node_modules/**/*'));
+				}
+
+				gs.pipe(gulp.dest(outputDir));
 			});
 		}, 
 		function(err) {console.log(err)}
@@ -91,36 +132,3 @@ gulp.task('copy-package-json', function() {
 	gulp.src('./package.json')
 		.pipe(gulp.dest('build/resources/main/META-INF/resources'))
 });
-
-// Handling of ES2015 transpilation
-const babel = require('gulp-babel');
-var babelPluginModules = require('babel-plugin-transform-es2015-modules-commonjs');
-// this the plugin that metal-cli uses -> var babelPluginModules = require('babel-plugin-transform-es2015-modules-amd');
-
-gulp.task('transpile', function() {
-	var srcFiles = 'src/main/resources/META-INF/resources/**/*.es.js';
-	var outputDir = 'build/resources/main/META-INF/resources';
-	
-	// https://github.com/metal/metal-tools-build-amd/blob/master/lib/pipelines/buildAmd.js#L26
-	var options = {
-		compact: false,
-    plugins: [babelPluginModules],
-    presets: ['es2015'],
-    // sourceMaps: options.sourceMaps
-	};
-
-	return gulp.src(srcFiles)
-	        .pipe(babel(options))
-	        .pipe(gulp.dest(outputDir));
-					
-					
-	// var result = babel.transformFileSync(
-	// 	'src/main/resources/META-INF/resources/lib/index.es.js', 
-	// 	options
-	// );
-	// 
-	// console.log(result.code);
-});
-
-// Define build's default target
-gulp.task('default', ['package-npm', 'copy-package-json', 'transpile']);
