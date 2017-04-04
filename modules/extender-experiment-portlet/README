@@ -1,0 +1,12 @@
+To build this project you need to:
+	1) Download project 'https://github.com/izaera/liferay-gulp-packager'
+		1) Run 'npm link' in the 'liferay-gulp-packager' project folder
+	2) Run 'npm link liferay-gulp-packager' in this project's folder
+	3) Run 'gradle build'
+	
+To deploy this project you need to:
+  1) Download project 'https://github.com/izaera/frontend-ng-loader-workspace'
+		1) Change dir to 'modules/frontend-packages-bundle-config-extender'
+		2) Edit 'build.gradle' and set 'liferay.deployDir' to your portal's 'bundles/deploy' dir
+		3) Run 'gradle deploy' in 
+	2) Run 'gradle deploy' in this project
