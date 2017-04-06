@@ -6,9 +6,7 @@
   "main": "lib/index.es.js",
   "dependencies": {
     "isarray": "^2.0.1",
-    "isobject": "^2.1.0",
-    "react": "^15.4.2",
-    "react-dom": "^15.4.2"
+    "isobject": "^2.1.0"
   },
   "devDependencies": {
     "gulp": "^3.9.1"

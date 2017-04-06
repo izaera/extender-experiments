@@ -1,13 +1,14 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
+import isArray from 'isarray';
+import isObject from 'isobject';
 
 export function render() {
-	ReactDOM.render(
-	  <h1>Hello, world! (from React 😎)</h1>,
-	  document.getElementById('react-canvas')
-	);
-}
+	console.log("import isArray from 'isarray' in index.es.js returned", isArray);
+	console.log('Calling isArray([]) from index.es.js');
+	var t = isArray([]);
+	console.log('which returns', t);
 
-module.exports = {
-	render: render
-};
+	console.log("import isObject from 'isobject' in index.es.js returned", isObject);
+	console.log('Calling isObject([]) from index.es.js');
+	t = isObject([]);
+	console.log('which returns', t);
+}
