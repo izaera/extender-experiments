@@ -8,8 +8,8 @@
 	};
 </script>
 
-<aui:script require="pkg:extender-experiment-portlet@1.0.0">
-	pkgExtenderExperimentPortlet100.render();
+<aui:script require="extender-experiment-portlet@1.0.0">
+	extenderExperimentPortlet100.render();
 </aui:script>
 
 <p>
