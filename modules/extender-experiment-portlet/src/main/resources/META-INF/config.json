@@ -1,0 +1,25 @@
+{
+  "extender-experiment-portlet@1.0.0/lib/index.es.js": {
+    "path": "/o/pkg/extender-experiment-portlet@1.0.0/lib/index.es.js",
+    "dependencies": ["exports", "isarray", "isobject"],
+    "dependencyVersions": {
+      "isarray": "2.0.1",
+      "isobject": "2.1.0"
+    }
+  },
+  "isarray@1.0.0/index.js": {
+    "path": "/o/pkg/isarray@1.0.0/index.js",
+    "dependencies": ["module", "require"]
+  }, 
+  "isarray@2.0.1/index.js": {
+    "path": "/o/pkg/isarray@2.0.1/index.js",
+    "dependencies": ["module", "require"]
+  }, 
+  "isobject@2.1.0/index.js": {
+    "path": "/o/pkg/isobject@2.1.0e/index.js",
+    "dependencies": ["module", "require", "isarray"],
+    "dependencyVersions": {
+      "isarray": "1.0.0"
+    }
+  }
+}
