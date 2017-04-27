@@ -15,7 +15,7 @@ And one sample project to test the feature:
 
 # Setup
 
-Clone the projects and select the `npm_loader` branch in all projects but `liferay-gulp-packager` (leave `master` for that one).
+Clone the projects and select the `version_loader` branch in all projects.
 
 The next step is npm-linking the loader with the portal:
 
