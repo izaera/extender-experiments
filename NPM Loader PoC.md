@@ -4,13 +4,13 @@
 
 There are three infrastructure projects involved:
 
-* liferay-portal ([https://github.com/liferay/liferay-portal]())
-* liferay-amd-loader ([https://github.com/izaera/liferay-amd-loader]())
-* liferay-gulp-packager ([https://github.com/izaera/liferay-gulp-packager]())
+* liferay-portal ([https://github.com/izaera/liferay-portal](https://github.com/izaera/liferay-portal))
+* liferay-amd-loader ([https://github.com/izaera/liferay-amd-loader](https://github.com/izaera/liferay-amd-loader))
+* liferay-gulp-packager ([https://github.com/izaera/liferay-gulp-packager](https://github.com/izaera/liferay-gulp-packager))
 
 And one sample project to test the feature:
 
-* extender-experiments ([https://github.com/izaera/extender-experiments]())
+* extender-experiments ([https://github.com/izaera/extender-experiments](https://github.com/izaera/extender-experiments))
 
 
 # Setup
