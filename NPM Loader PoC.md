@@ -23,7 +23,7 @@ The next step is npm-linking the loader with the portal:
 2. Go to `liferay-portal` project and change to `modules/apps/foundation/frontend-js/frontend-js-web` directory
 3. Run `npm link liferay-amd-loader`
 
-Now, build the `liferay-amd-loader` project by running `gulp` inside the project folder and then start the portal.
+Now, build the `liferay-amd-loader` project by running `gulp` inside the project folder, do an `ant all` of the portal (or at least a `gradle clean build` of `frontend-js-web`) and then start the portal.
 
 
 # Deployment of sample portlet
